@@ -1,0 +1,150 @@
+{
+  "id": "https://api.sbgenomics.com/v2/apps/ana_d/pljuga-playground/bamtools-merge-2-4-0/0/raw/",
+  "class": "CommandLineTool",
+  "label": "BamTools Merge",
+  "description": "BamTools Merge merges multiple BAM files into a single file.",
+  "requirements": [],
+  "inputs": [
+    {
+      "sbg:category": "Input & Output",
+      "type": [
+        {
+          "items": "File",
+          "type": "array"
+        }
+      ],
+      "sbg:fileTypes": "BAM",
+      "inputBinding": {
+        "position": 0,
+        "itemSeparator": null,
+        "sbg:cmdInclude": true,
+        "prefix": "-in",
+        "separate": true
+      },
+      "label": "Input BAM files",
+      "id": "#input_bam_files",
+      "description": "The input BAM files."
+    },
+    {
+      "sbg:category": "Input & Output",
+      "type": [
+        "null",
+        "string"
+      ],
+      "label": "Region of interest",
+      "inputBinding": {
+        "position": 2,
+        "sbg:cmdInclude": true,
+        "prefix": "-region",
+        "separate": true
+      },
+      "id": "#region",
+      "description": "A region of interest (e.g. \"chr1:500..chr3:1500\"). See the documentation for more info."
+    }
+  ],
+  "outputs": [
+    {
+      "type": [
+        "File"
+      ],
+      "label": "Output BAM file",
+      "description": "Output BAM file.",
+      "sbg:fileTypes": "BAM",
+      "id": "#output_bam_file",
+      "outputBinding": {
+        "sbg:metadata": {},
+        "glob": "merged.bam",
+        "sbg:inheritMetadataFrom": "#input_bams"
+      }
+    }
+  ],
+  "hints": [
+    {
+      "dockerImageId": "f808163d4cd3",
+      "class": "DockerRequirement",
+      "dockerPull": "images.sbgenomics.com/markop/bamtools:2.4.0"
+    },
+    {
+      "class": "sbg:CPURequirement",
+      "value": 1
+    },
+    {
+      "class": "sbg:MemRequirement",
+      "value": 1000
+    }
+  ],
+  "baseCommand": [
+    "/opt/bamtools/bin/bamtools",
+    "merge"
+  ],
+  "stdin": "",
+  "stdout": "",
+  "successCodes": [],
+  "temporaryFailCodes": [],
+  "arguments": [
+    {
+      "position": 1,
+      "prefix": "-out",
+      "separate": true,
+      "valueFrom": "merged.bam"
+    }
+  ],
+  "sbg:revision": 0,
+  "sbg:modifiedOn": 1464784469,
+  "sbg:copyOf": "sevenbridges/public-apps/bamtools-merge-2-4-0/1",
+  "sbg:homepage": "https://github.com/pezmaster31/bamtools/wiki",
+  "sbg:toolAuthor": "Derek Barnett, Erik Garrison, Gabor Marth, and Michael Stromberg",
+  "sbg:revisionsInfo": [
+    {
+      "sbg:modifiedBy": "markovTest",
+      "sbg:revision": 0,
+      "sbg:modifiedOn": 1464784469
+    }
+  ],
+  "sbg:contributors": [
+    "markovTest"
+  ],
+  "sbg:image_url": null,
+  "sbg:createdOn": 1464784469,
+  "sbg:project": "ana_d/pljuga-playground",
+  "sbg:cmdPreview": "/opt/bamtools/bin/bamtools merge -in 1.bam -in 2.bam -out merged.bam -region chr1",
+  "sbg:sbgMaintained": false,
+  "sbg:validationErrors": [],
+  "sbg:job": {
+    "inputs": {
+      "region": "chr1",
+      "input_bam_files": [
+        {
+          "path": "1.bam"
+        },
+        {
+          "path": "2.bam"
+        }
+      ]
+    },
+    "allocatedResources": {
+      "cpu": 1,
+      "mem": 1000
+    }
+  },
+  "sbg:modifiedBy": "markovTest",
+  "sbg:id": "ana_d/pljuga-playground/bamtools-merge-2-4-0/0",
+  "sbg:license": "The MIT License",
+  "sbg:createdBy": "markovTest",
+  "sbg:links": [
+    {
+      "id": "https://github.com/pezmaster31/bamtools",
+      "label": "Homepage"
+    },
+    {
+      "id": "https://github.com/pezmaster31/bamtools/wiki",
+      "label": "Wiki"
+    }
+  ],
+  "sbg:latestRevision": 0,
+  "sbg:toolkit": "BamTools",
+  "sbg:toolkitVersion": "2.4.0",
+  "sbg:categories": [
+    "SAM/BAM-Processing"
+  ]
+}
