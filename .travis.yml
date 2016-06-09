@@ -4,3 +4,4 @@ language: java
 script:
   - pwd
   - mvn clean package
+  - mvn exec:java -Dexec.mainClass="org.rabix.tests.Main"
