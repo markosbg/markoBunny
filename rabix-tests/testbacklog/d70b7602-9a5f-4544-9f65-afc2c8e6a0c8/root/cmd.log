@@ -1,1 +1,0 @@
-grep inf /Users/marko/code/markoBunny/rabix-tests/testbacklog/grep.inputs.yaml > out.txt
