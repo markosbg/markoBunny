@@ -24,8 +24,11 @@ public class TestRunner {
   private static String workingdir = "../rabix-backend-local/target/";
 
   public static void main(String[] commandLineArguments) {
-    testDirPath = commandLineArguments[0];
-    cmd_prefix = commandLineArguments[1];
+//    testDirPath = commandLineArguments[0];
+//    cmd_prefix = commandLineArguments[1];
+    testDirPath = "testbacklog/";
+    cmd_prefix = "./rabix.sh";
+    
     startTestExecution();
   }
 
