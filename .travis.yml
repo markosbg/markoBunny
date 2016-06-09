@@ -4,4 +4,4 @@ language: java
 script:
   - pwd
   - mvn clean package
-  - mvn exec:java -Dexec.mainClass="org.rabix.tests.Main"
+  - mvn org.codehaus.mojo:exec-maven-plugin:1.5.0:java -Dexec.mainClass="org.rabix.tests.Main" | grep -Ev '(^\[|Download\w+:)'
