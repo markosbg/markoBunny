@@ -3,5 +3,4 @@ language: java
 
 script:
   - pwd
-  -ls -ltra
   - mvn clean package
