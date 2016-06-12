@@ -8,7 +8,7 @@ script:
   - pwd
   - ls -ltra
   - mvn org.codehaus.mojo:exec-maven-plugin:1.5.0:java -pl rabix-tests -Dexec.mainClass="org.rabix.tests.TestRunner"
-  - cd rabix-backend-local
+  - cd rabix-tests
   - ls -ltra
  # - mvn exec:java -pl rabix-tests -Dexec.mainClass="TestRunner"
 
