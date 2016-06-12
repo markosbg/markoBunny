@@ -6,8 +6,6 @@ script:
   - ls
   - mvn clean install package
   - pwd
-  - ls
-  - cd rabix-tests
   - ls -ltra
   - mvn org.codehaus.mojo:exec-maven-plugin:1.5.0:java -pl rabix-tests -Dexec.mainClass="org.rabix.tests.TestRunner"
 
