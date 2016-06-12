@@ -7,7 +7,7 @@ script:
   - mvn clean install package
   - pwd
   - ls
-  - cd rabix-backend-local/target/
+  - cd rabix-tests
   - ls -ltra
   - mvn exec:java -pl rabix-tests -Dexec.mainClass="org.rabix.tests.TestRunner"
 
