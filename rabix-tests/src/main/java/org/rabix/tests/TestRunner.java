@@ -33,7 +33,7 @@ public class TestRunner {
 //    testDirPath = commandLineArguments[0];
 //    cmd_prefix = commandLineArguments[1];
     
-    testDirPath = "testbacklog/";
+    testDirPath = "rabix-tests/testbacklog/";
     cmd_prefix = "./rabix.sh";
     
     startTestExecution();
@@ -107,10 +107,10 @@ public class TestRunner {
           }
         }
       } else {
-        System.out.println("[ERROR] Test directory is empty.");
+        System.out.println("!@ERROR Test directory is empty.");
       }
     } else {
-      System.out.println("[ERROR] Test directory path is not valid directory path.");
+      System.out.println("!@ERROR Test directory path is not valid directory path.");
     }
 
   }
