@@ -41,7 +41,10 @@ public class TestRunner {
     
     if (dir.isDirectory()) {
       if (directoryListing != null) {
-        executeCommand("tar -zxvf rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz");
+        //executeCommand("tar -zxvf rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz"); // for local execution
+        executeCommand("tar -zxvf rabix-backend-local/target/rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz"); // for travis execution
+        
+        
          // TODO for inner testing - delete later
          System.out.println("***** absolute path testing: *****");
          executeCommand("./rabix.sh ../../rabix-tests/testbacklog/grep.cwl.yaml ../../rabix-tests/testbacklog/grep.inputs.yaml > result.yaml");
