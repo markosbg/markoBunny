@@ -4,13 +4,6 @@ language: java
 script:
   - mvn clean install package
   - pwd
-  - cd rabix-backend-local
-  - ls -ltra
-  - cd target
-  - ls -ltra
-  - pwd
-  - cd
-  - pwd
  #- mvn org.codehaus.mojo:exec-maven-plugin:1.5.0:java -pl rabix-tests -Dexec.mainClass="org.rabix.tests.TestRunner"
   - mvn org.codehaus.mojo:exec-maven-plugin:1.5.0:java -pl rabix-tests -Dexec.mainClass="org.rabix.tests.TestRunner" -Dexec.args="/home/travis/build/markosbg/markoBunny/rabix-tests/testbacklog ./rabix.sh" -e -X 
  #- mvn exec:java -Dexec.mainClass="org.rabix.tests.TestRunner" -Dexec.args="/home/travis/build/markosbg/markoBunny/rabix-tests/testbacklog ./rabix.sh" -e -X
