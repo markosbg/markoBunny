@@ -32,6 +32,7 @@ public class TestRunner {
   public static void main(String[] commandLineArguments) {
 //    testDirPath = commandLineArguments[0];
 //    cmd_prefix = commandLineArguments[1];
+    System.out.println("Working Directory from main = " + System.getProperty("user.dir"));
     
     testDirPath = "rabix-tests/testbacklog/";
     cmd_prefix = "./rabix.sh";
@@ -42,14 +43,14 @@ public class TestRunner {
   private static void startTestExecution() {
     boolean testPassed = false;
 //    boolean cmdOK = false;
-    
+    System.out.println("Working Directory from testexecution = " + System.getProperty("user.dir"));
     File dir = new File(testDirPath);
     File[] directoryListing = dir.listFiles();
     
     if (dir.isDirectory()) {
       if (directoryListing != null) {
         //executeCommand("tar -zxvf rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz"); // for local execution
-        executeCommand("tar -zxvf rabix-backend-local/target/rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz"); // for travis execution
+        executeCommand("sudo tar -zxvf rabix-backend-local/target/rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz"); // for travis execution
         
         
          // TODO for inner testing - delete later
@@ -180,6 +181,7 @@ public class TestRunner {
 
   public static ArrayList<String> command(final String cmdline, final String directory) {
     try {
+      System.out.println("Working Directory from command = " + System.getProperty("user.dir"));
       Process process = new ProcessBuilder(new String[] { "bash", "-c", cmdline }).redirectErrorStream(true)
           .directory(new File(directory)).start();
 
@@ -202,6 +204,7 @@ public class TestRunner {
   }
 
   static void executeCommand(String cmdline) {
+    System.out.println("Working Directory from execute cmd = " + System.getProperty("user.dir"));
     ArrayList<String> output = command(cmdline, workingdir); // TODO dive into
     if (null == output)
       System.out.println("COMMAND FAILED: " + cmdline + "\n");
