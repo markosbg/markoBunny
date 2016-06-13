@@ -26,8 +26,8 @@ public class TestRunner {
 //  private static String workingdir = "../rabix-backend-local/target/";
 //  
   //for travis execution
-  private static String resultPath = "rabix-backend-local/target/result.yaml";
-  private static String workingdir = "rabix-backend-local/target/";
+  private static String resultPath = "/home/travis/build/markosbg/markoBunny/rabix-backend-local/target/result.yaml";
+  private static String workingdir = "/home/travis/build/markosbg/markoBunny/rabix-backend-local/target/";
 
   public static void main(String[] commandLineArguments) {
 //    testDirPath = commandLineArguments[0];
@@ -50,7 +50,7 @@ public class TestRunner {
     if (dir.isDirectory()) {
       if (directoryListing != null) {
         //executeCommand("tar -zxvf rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz"); // for local execution
-        executeCommand("sudo tar -zxvf rabix-backend-local/target/rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz"); // for travis execution
+        executeCommand("sudo tar -zxvf /home/travis/build/markosbg/markoBunny/rabix-backend-local/target/rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz"); // for travis execution
         
         
          // TODO for inner testing - delete later
@@ -59,7 +59,7 @@ public class TestRunner {
          System.out.println("***** END absolute path testing: *****");
          // TODO for inner testing - delete later
          
-         executeCommand("cp -a rabix-tests/testbacklog .");
+         executeCommand("cp -a /home/travis/build/markosbg/markoBunny/rabix-tests/testbacklog .");
          
         for (File child : directoryListing) {
           if (!child.toString().endsWith(".test.yaml"))
