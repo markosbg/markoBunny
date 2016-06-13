@@ -55,7 +55,7 @@ public class TestRunner {
         
          // TODO for inner testing - delete later
          System.out.println("***** absolute path testing: *****");
-         executeCommand("./rabix.sh rabix-tests/testbacklog/grep.cwl.yaml rabix-tests/testbacklog/grep.inputs.yaml > result.yaml");
+         executeCommand("./rabix.sh /home/travis/build/markosbg/markoBunny/rabix-tests/testbacklog/grep.cwl.yaml /home/travis/build/markosbg/markoBunny/rabix-tests/testbacklog/grep.inputs.yaml > result.yaml");
          System.out.println("***** END absolute path testing: *****");
          // TODO for inner testing - delete later
          
