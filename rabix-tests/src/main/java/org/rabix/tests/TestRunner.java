@@ -15,52 +15,41 @@ import java.util.Map.Entry;
 
 import org.rabix.common.helper.JSONHelper;
 
-
 public class TestRunner {
 
   private static String testDirPath;
   private static String cmd_prefix;
-  
-  //for local execution
-//  private static String resultPath = "../rabix-backend-local/target/result.yaml";
-//  private static String workingdir = "../rabix-backend-local/target/";
-//  
-  //for travis execution
+
   private static String resultPath = "/home/travis/build/markosbg/markoBunny/rabix-backend-local/target/result.yaml";
   private static String workingdir = "/home/travis/build/markosbg/markoBunny/rabix-backend-local/target/";
 
   public static void main(String[] commandLineArguments) {
-//    testDirPath = commandLineArguments[0];
-//    cmd_prefix = commandLineArguments[1];
     System.out.println("Working Directory from main = " + System.getProperty("user.dir"));
-    
     testDirPath = "rabix-tests/testbacklog/";
     cmd_prefix = "./rabix.sh";
-    
     startTestExecution();
   }
 
   private static void startTestExecution() {
     boolean testPassed = false;
-//    boolean cmdOK = false;
+    // boolean cmdOK = false;
     System.out.println("Working Directory from testexecution = " + System.getProperty("user.dir"));
     File dir = new File(testDirPath);
     File[] directoryListing = dir.listFiles();
-    
+
     if (dir.isDirectory()) {
       if (directoryListing != null) {
-        //executeCommand("tar -zxvf rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz"); // for local execution
-        executeCommand("sudo tar -zxvf /home/travis/build/markosbg/markoBunny/rabix-backend-local/target/rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz"); // for travis execution
-        
-        
-         // TODO for inner testing - delete later
-         System.out.println("***** absolute path testing: *****");
-         executeCommand("./rabix.sh /home/travis/build/markosbg/markoBunny/rabix-tests/testbacklog/grep.cwl.yaml /home/travis/build/markosbg/markoBunny/rabix-tests/testbacklog/grep.inputs.yaml > result.yaml");
-         System.out.println("***** END absolute path testing: *****");
-         // TODO for inner testing - delete later
-         
-         executeCommand("cp -a /home/travis/build/markosbg/markoBunny/rabix-tests/testbacklog .");
-         
+        executeCommand("sudo tar -zxvf /home/travis/build/markosbg/markoBunny/rabix-backend-local/target/rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz"); // for
+                                                                                                                                                          // travis
+                                                                                                                                                          // execution
+        // TODO for inner testing - delete later
+        System.out.println("***** absolute path testing: *****");
+        executeCommand("./rabix.sh /home/travis/build/markosbg/markoBunny/rabix-tests/testbacklog/grep.cwl.yaml /home/travis/build/markosbg/markoBunny/rabix-tests/testbacklog/grep.inputs.yaml > result.yaml");
+        System.out.println("***** END absolute path testing: *****");
+        // TODO for inner testing - delete later
+
+        executeCommand("cp -a /home/travis/build/markosbg/markoBunny/rabix-tests/testbacklog .");
+
         for (File child : directoryListing) {
           if (!child.toString().endsWith(".test.yaml"))
             continue;
@@ -77,19 +66,19 @@ public class TestRunner {
               System.out.println("  app: " + mapTest.get("app"));
               System.out.println("  inputs: " + mapTest.get("inputs"));
               System.out.println("  expected: " + mapTest.get("expected"));
-              
+
               String cmd = cmd_prefix + " " + mapTest.get("app") + " " + mapTest.get("inputs") + " > result.yaml";
               System.out.println("->Running cmd: " + cmd);
               executeCommand(cmd);
-              
+
               File resultFile = new File(resultPath);
-              
+
               String resultText = readFile(resultFile.getAbsolutePath(), Charset.defaultCharset());
               Map<String, Object> resultData = JSONHelper.readMap(JSONHelper.transformToJSON(resultText));
               System.out.println("Generated result file:");
               System.out.println(resultText);
               testPassed = validateTestCase(mapTest, resultData);
-              //cmdOK = validateCommandLine(mapTest, resultData);
+              // cmdOK = validateCommandLine(mapTest, resultData);
               System.out.println("Test result:");
               if (testPassed) {
 
@@ -97,9 +86,7 @@ public class TestRunner {
               } else {
                 System.out.println("Test: " + test_name + " FAILED");
               }
-              
-              
-              
+
             }
 
           } catch (IOException e) {
@@ -116,36 +103,37 @@ public class TestRunner {
 
   }
 
-  //TODO todo 
-  private static boolean validateCommandLine(Map<String, Map<String, LinkedHashMap>> mapTest, Map<String, Object> resultData) throws IOException {
+  // TODO todo
+  private static boolean validateCommandLine(Map<String, Map<String, LinkedHashMap>> mapTest,
+      Map<String, Object> resultData) throws IOException {
     Map<String, Object> resultValues = ((Map<String, Object>) resultData.get("outfile"));
     String resultFileName = resultValues.get("path").toString();
     String rootPath = resultFileName.substring(0, resultFileName.lastIndexOf("/"));
     String cmdLogPath = resultFileName.substring(0, resultFileName.lastIndexOf("/")).concat("/cmd.log");
     String jobJsonPath = resultFileName.substring(0, resultFileName.lastIndexOf("/")).concat("/job.json");
-    
-    File cmdLogFile = new File("Users/marko/code/janko/rabix-backend-local/target/testbacklog"+cmdLogPath); // check usage
-    String cmdLogToString = readFile("/Users/marko/code/janko/rabix-backend-local/target/testbacklog/"+cmdLogPath, Charset.defaultCharset());
-    
-    File jobJsonFile = new File("Users/marko/code/janko/rabix-backend-local/target/testbacklog"+jobJsonPath); // check usage
-    String jobJsonToString = readFile("/Users/marko/code/janko/rabix-backend-local/target/testbacklog/"+jobJsonPath, Charset.defaultCharset());
-    
-    
+
+    File cmdLogFile = new File("Users/marko/code/janko/rabix-backend-local/target/testbacklog" + cmdLogPath); // check
+                                                                                                              // usage
+    String cmdLogToString = readFile("/Users/marko/code/janko/rabix-backend-local/target/testbacklog/" + cmdLogPath,
+        Charset.defaultCharset());
+
+    File jobJsonFile = new File("Users/marko/code/janko/rabix-backend-local/target/testbacklog" + jobJsonPath); // check
+                                                                                                                // usage
+    String jobJsonToString = readFile("/Users/marko/code/janko/rabix-backend-local/target/testbacklog/" + jobJsonPath,
+        Charset.defaultCharset());
+
     System.out.println("***** command line testing: *****");
-    System.out.println("generated cmg line: " +cmdLogToString);
+    System.out.println("generated cmg line: " + cmdLogToString);
     System.out.println("job json: \n" + jobJsonToString);
-    //Map<String, Object> inputSuite = JSONHelper.readMap(JSONHelper.transformToJSON(cmdLogToString));
+    // Map<String, Object> inputSuite = JSONHelper.readMap(JSONHelper.transformToJSON(cmdLogToString));
 
     // TODO : nastavi sa parsiranjem ovih finih stringova.
-    
-    
-    
-    
-    
+
     return false;
   }
 
-  private static boolean validateTestCase(Map<String, Map<String, LinkedHashMap>> mapTest, Map<String, Object> resultData) {
+  private static boolean validateTestCase(Map<String, Map<String, LinkedHashMap>> mapTest,
+      Map<String, Object> resultData) {
     String resultFileName;
     int resultFileSize;
     String resultFileClass;
@@ -191,10 +179,9 @@ public class TestRunner {
       while ((line = br.readLine()) != null)
         output.add(line);
 
-      if (0 != process.waitFor()){
+      if (0 != process.waitFor()) {
         return null;
       }
-        
 
       return output;
 
@@ -205,7 +192,7 @@ public class TestRunner {
 
   static void executeCommand(String cmdline) {
     System.out.println("Working Directory from execute cmd = " + System.getProperty("user.dir"));
-    ArrayList<String> output = command(cmdline, workingdir); // TODO dive into
+    ArrayList<String> output = command(cmdline, workingdir);
     if (null == output)
       System.out.println("COMMAND FAILED: " + cmdline + "\n");
     else
