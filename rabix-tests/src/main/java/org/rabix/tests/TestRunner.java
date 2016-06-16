@@ -8,6 +8,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -22,15 +23,30 @@ public class TestRunner {
 
   private static String resultPath = "./rabix-backend-local/target/result.yaml";
   private static String workingdir = "./rabix-backend-local/target/";
-
+  private static Map<String, Object> configFile = new HashMap<>();
+  
   public static void main(String[] commandLineArguments) {
-    testDirPath = "rabix-tests/testbacklog/";
-    cmd_prefix = "./rabix.sh";
+      String config = null;
+      try {
+        config = readFile(new File("config/core.properties").getAbsolutePath(), Charset.defaultCharset());
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      Map<String, Object> configMap = JSONHelper.readMap(JSONHelper.transformToJSON(config));
+      testDirPath = (String) configMap.get("testDirPath");
+      cmd_prefix = (String) configMap.get("cmd_prefix");
+      
+//      String currentTest = readFile(child.getAbsolutePath(), Charset.defaultCharset());
+//      Map<String, Object> inputSuite = JSONHelper.readMap(JSONHelper.transformToJSON(currentTest));
+    
+//    testDirPath = "rabix-tests/testbacklog/";
+//    cmd_prefix = "./rabix.sh";
     startTestExecution();
   }
 
   private static void startTestExecution() {
-    boolean testFlag = true;
+    boolean success = true;
     boolean testPassed = false;
     File dir = new File(testDirPath);
     File[] directoryListing = dir.listFiles();
@@ -38,8 +54,9 @@ public class TestRunner {
     if (dir.isDirectory()) {
       if (directoryListing != null) {
         System.out.println("Extracting jar file: ");
-        executeCommand("sudo tar -zxvf "+System.getProperty("user.dir")+"/rabix-backend-local/target/rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz");
-        executeCommand("cp -a "+System.getProperty("user.dir")+"/rabix-tests/testbacklog .");
+        executeCommand("sudo tar -zxvf " + System.getProperty("user.dir")
+            + "/rabix-backend-local/target/rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz");
+        executeCommand("cp -a " + System.getProperty("user.dir") + "/rabix-tests/testbacklog .");
 
         for (File child : directoryListing) {
           if (!child.toString().endsWith(".test.yaml"))
@@ -77,7 +94,7 @@ public class TestRunner {
                 System.out.println(test_name + " PASSED");
               } else {
                 System.out.println(test_name + " FAILED");
-                testFlag = false;
+                success = false;
               }
 
             }
@@ -88,7 +105,7 @@ public class TestRunner {
           }
         }
 
-        if (testFlag) {
+        if (success) {
           System.out
               .println("---------------------------------------------------------------------------------------------------------------------------------------------");
           System.out.println("Test suite passed successfully.");
