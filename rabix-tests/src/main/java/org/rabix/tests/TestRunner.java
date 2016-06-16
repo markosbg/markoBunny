@@ -38,7 +38,7 @@ public class TestRunner {
     if (dir.isDirectory()) {
       if (directoryListing != null) {
         System.out.println("Extracting jar file: ");
-        executeCommand("sudo tar -zxvf ./rabix-backend-local/target/rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz");
+        executeCommand("sudo tar -zxvf /home/travis/build/markosbg/markoBunny/rabix-backend-local/target/rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz");
         executeCommand("cp -a ./rabix-tests/testbacklog .");
 
         for (File child : directoryListing) {
