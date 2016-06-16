@@ -40,7 +40,7 @@ public class TestRunner {
       if (directoryListing != null) {
         System.out.println("Working Directory from startTestExecution = " + System.getProperty("user.dir"));
         System.out.println("Extracting jar file: ");
-        executeCommand("sudo tar -zxvf+ "+System.getProperty("user.dir")+"/rabix-backend-local/target/rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz");
+        executeCommand("sudo tar -zxvf "+System.getProperty("user.dir")+"/rabix-backend-local/target/rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz");
         executeCommand("cp -a /home/travis/build/markosbg/markoBunny/rabix-tests/testbacklog .");
 
         for (File child : directoryListing) {
