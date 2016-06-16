@@ -8,7 +8,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -23,25 +22,10 @@ public class TestRunner {
 
   private static String resultPath = "./rabix-backend-local/target/result.yaml";
   private static String workingdir = "./rabix-backend-local/target/";
-  private static Map<String, Object> configFile = new HashMap<>();
-  
+
   public static void main(String[] commandLineArguments) {
-      String config = null;
-      try {
-        config = readFile(new File("config/core.properties").getAbsolutePath(), Charset.defaultCharset());
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-      Map<String, Object> configMap = JSONHelper.readMap(JSONHelper.transformToJSON(config));
-      testDirPath = (String) configMap.get("testDirPath");
-      cmd_prefix = (String) configMap.get("cmd_prefix");
-      
-//      String currentTest = readFile(child.getAbsolutePath(), Charset.defaultCharset());
-//      Map<String, Object> inputSuite = JSONHelper.readMap(JSONHelper.transformToJSON(currentTest));
-    
-//    testDirPath = "rabix-tests/testbacklog/";
-//    cmd_prefix = "./rabix.sh";
+    testDirPath = "rabix-tests/testbacklog/";
+    cmd_prefix = "./rabix.sh";
     startTestExecution();
   }
 
