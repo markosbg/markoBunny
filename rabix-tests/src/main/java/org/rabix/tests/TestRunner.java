@@ -36,7 +36,8 @@ public class TestRunner {
 
     if (dir.isDirectory()) {
       if (directoryListing != null) {
-        executeCommand("sudo tar -zxvf /home/travis/build/markosbg/markoBunny/rabix-backend-local/target/rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz"); 
+        System.out.println("Extracting jar file: ");
+        executeCommand("sudo tar -zxvf /home/travis/build/markosbg/markoBunny/rabix-backend-local/target/rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz");
         executeCommand("cp -a /home/travis/build/markosbg/markoBunny/rabix-tests/testbacklog .");
 
         for (File child : directoryListing) {
@@ -50,7 +51,8 @@ public class TestRunner {
               Entry thisEntry = (Entry) entries.next();
               Object test_name = thisEntry.getKey();
               Object test = thisEntry.getValue();
-              System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------");
+              System.out
+                  .println("---------------------------------------------------------------------------------------------------------------------------------------------");
               System.out.println("Running test: " + test_name + "\nWith given parameters:");
               Map<String, Map<String, LinkedHashMap>> mapTest = (Map<String, Map<String, LinkedHashMap>>) test;
               System.out.println("  app: " + mapTest.get("app"));
@@ -65,18 +67,20 @@ public class TestRunner {
 
               String resultText = readFile(resultFile.getAbsolutePath(), Charset.defaultCharset());
               Map<String, Object> resultData = JSONHelper.readMap(JSONHelper.transformToJSON(resultText));
-              System.out.println("Generated result file:");
+              System.out.println("\nGenerated result file:");
               System.out.println(resultText);
               testPassed = validateTestCase(mapTest, resultData);
-              
-              System.out.print("Test result:");
+
+              System.out.print("\nTest result: ");
               if (testPassed) {
 
                 System.out.println(test_name + " PASSED");
-                System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out
+                    .println("---------------------------------------------------------------------------------------------------------------------------------------------");
               } else {
                 System.out.println(test_name + " FAILED");
-                System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out
+                    .println("---------------------------------------------------------------------------------------------------------------------------------------------");
               }
 
             }
@@ -94,7 +98,7 @@ public class TestRunner {
     }
 
   }
-  
+
   private static boolean validateTestCase(Map<String, Map<String, LinkedHashMap>> mapTest,
       Map<String, Object> resultData) {
     String resultFileName;
@@ -132,7 +136,6 @@ public class TestRunner {
 
   public static ArrayList<String> command(final String cmdline, final String directory) {
     try {
-      System.out.println("Working Directory from command = " + System.getProperty("user.dir"));
       Process process = new ProcessBuilder(new String[] { "bash", "-c", cmdline }).redirectErrorStream(true)
           .directory(new File(directory)).start();
 
@@ -154,7 +157,6 @@ public class TestRunner {
   }
 
   static void executeCommand(String cmdline) {
-    System.out.println("Working Directory from execute cmd = " + System.getProperty("user.dir"));
     ArrayList<String> output = command(cmdline, workingdir);
     if (null == output)
       System.out.println("COMMAND FAILED: " + cmdline + "\n");
