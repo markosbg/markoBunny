@@ -30,6 +30,7 @@ public class TestRunner {
   }
 
   private static void startTestExecution() {
+    boolean testFlag = true;
     boolean testPassed = false;
     File dir = new File(testDirPath);
     File[] directoryListing = dir.listFiles();
@@ -60,7 +61,7 @@ public class TestRunner {
               System.out.println("  expected: " + mapTest.get("expected"));
 
               String cmd = cmd_prefix + " " + mapTest.get("app") + " " + mapTest.get("inputs") + " > result.yaml";
-              System.out.println("->Running cmd: " + cmd);
+              System.out.println("->Running cmd: " + cmd +"\n");
               executeCommand(cmd);
 
               File resultFile = new File(resultPath);
@@ -79,6 +80,7 @@ public class TestRunner {
                     .println("---------------------------------------------------------------------------------------------------------------------------------------------");
               } else {
                 System.out.println(test_name + " FAILED");
+                testFlag = false;
                 System.out
                     .println("---------------------------------------------------------------------------------------------------------------------------------------------");
               }
@@ -89,6 +91,12 @@ public class TestRunner {
             // TODO Auto-generated catch block
             e.printStackTrace();
           }
+        }
+        
+        if(testFlag){
+          System.out.println("Test suite passed successfully.");
+        }else {
+          System.out.println("Test suite failed."); 
         }
       } else {
         System.out.println("Problem with provided test directory: Test directory is empty.");
