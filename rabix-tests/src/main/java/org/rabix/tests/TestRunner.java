@@ -24,7 +24,6 @@ public class TestRunner {
   private static String workingdir = "./rabix-backend-local/target/";
 
   public static void main(String[] commandLineArguments) {
-    System.out.println("Working Directory from main = " + System.getProperty("user.dir"));
     testDirPath = "rabix-tests/testbacklog/";
     cmd_prefix = "./rabix.sh";
     startTestExecution();
@@ -38,10 +37,9 @@ public class TestRunner {
 
     if (dir.isDirectory()) {
       if (directoryListing != null) {
-        System.out.println("Working Directory from startTestExecution = " + System.getProperty("user.dir"));
         System.out.println("Extracting jar file: ");
         executeCommand("sudo tar -zxvf "+System.getProperty("user.dir")+"/rabix-backend-local/target/rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz");
-        executeCommand("cp -a /home/travis/build/markosbg/markoBunny/rabix-tests/testbacklog .");
+        executeCommand("cp -a "+System.getProperty("user.dir")+"/rabix-tests/testbacklog .");
 
         for (File child : directoryListing) {
           if (!child.toString().endsWith(".test.yaml"))
@@ -114,7 +112,6 @@ public class TestRunner {
 
   private static boolean validateTestCase(Map<String, Map<String, LinkedHashMap>> mapTest,
       Map<String, Object> resultData) {
-    System.out.println("Working Directory from validateTestCase = " + System.getProperty("user.dir"));
     String resultFileName;
     int resultFileSize;
     String resultFileClass;
@@ -150,7 +147,6 @@ public class TestRunner {
 
   public static ArrayList<String> command(final String cmdline, final String directory) {
     try {
-      System.out.println("Working Directory from command = " + System.getProperty("user.dir"));
       Process process = new ProcessBuilder(new String[] { "bash", "-c", cmdline }).redirectErrorStream(true)
           .directory(new File(directory)).start();
 
@@ -172,7 +168,6 @@ public class TestRunner {
   }
 
   static void executeCommand(String cmdline) {
-    System.out.println("Working Directory from executeCommand = " + System.getProperty("user.dir"));
     ArrayList<String> output = command(cmdline, workingdir);
     if (null == output)
       System.out.println("COMMAND FAILED: " + cmdline + "\n");
@@ -185,7 +180,6 @@ public class TestRunner {
    * Reads content from a file
    */
   static String readFile(String path, Charset encoding) throws IOException {
-    System.out.println("Working Directory from readFile = " + System.getProperty("user.dir"));
     byte[] encoded = Files.readAllBytes(Paths.get(path));
     return new String(encoded, encoding);
   }
