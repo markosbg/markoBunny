@@ -20,8 +20,8 @@ public class TestRunner {
   private static String testDirPath;
   private static String cmd_prefix;
 
-  private static String resultPath = "/home/travis/build/markosbg/markoBunny/rabix-backend-local/target/result.yaml";
-  private static String workingdir = "/home/travis/build/markosbg/markoBunny/rabix-backend-local/target/";
+  private static String resultPath = "./rabix-backend-local/target/result.yaml";
+  private static String workingdir = "./rabix-backend-local/target/";
 
   public static void main(String[] commandLineArguments) {
     testDirPath = "rabix-tests/testbacklog/";
@@ -61,7 +61,7 @@ public class TestRunner {
               System.out.println("  expected: " + mapTest.get("expected"));
 
               String cmd = cmd_prefix + " " + mapTest.get("app") + " " + mapTest.get("inputs") + " > result.yaml";
-              System.out.println("->Running cmd: " + cmd +"\n");
+              System.out.println("->Running cmd: " + cmd + "\n");
               executeCommand(cmd);
 
               File resultFile = new File(resultPath);
@@ -87,15 +87,19 @@ public class TestRunner {
             e.printStackTrace();
           }
         }
-        
-        if(testFlag){
-          System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------");
+
+        if (testFlag) {
+          System.out
+              .println("---------------------------------------------------------------------------------------------------------------------------------------------");
           System.out.println("Test suite passed successfully.");
-          System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------");
-        }else {
-          System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------");
-          System.out.println("Test suite failed."); 
-          System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------");
+          System.out
+              .println("---------------------------------------------------------------------------------------------------------------------------------------------");
+        } else {
+          System.out
+              .println("---------------------------------------------------------------------------------------------------------------------------------------------");
+          System.out.println("Test suite failed.");
+          System.out
+              .println("---------------------------------------------------------------------------------------------------------------------------------------------");
         }
       } else {
         System.out.println("Problem with provided test directory: Test directory is empty.");
