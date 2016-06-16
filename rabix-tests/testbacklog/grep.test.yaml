@@ -14,7 +14,7 @@ test2:
     outfile:
       class: File
       name: out.txt
-      size: 25
+      size: 37
 test3:
   app: testbacklog/grep.cwl.yaml
   inputs: testbacklog/grep.inputs.yaml
@@ -22,4 +22,4 @@ test3:
     outfile:
       class: File
       name: out.txt
-      size: 25
+      size: 37
