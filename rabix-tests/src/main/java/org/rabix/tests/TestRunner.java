@@ -8,6 +8,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -24,11 +25,36 @@ public class TestRunner {
   private static String workingdir = "./rabix-backend-local/target/";
 
   public static void main(String[] commandLineArguments) {
-    testDirPath = "rabix-tests/testbacklog/";
-    cmd_prefix = "./rabix.sh";
+
+    try {
+      testDirPath = getConfig("testDirPath");
+      cmd_prefix = getConfig("cmd_prefix"); 
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+       
+    
+//    testDirPath = "rabix-tests/testbacklog/";
+//    cmd_prefix = "./rabix.sh";
     startTestExecution();
   }
 
+  
+  private static String getConfig(String key) throws IOException {
+    File configFile = new File("config/core.properties");
+    String config = readFile(configFile.getAbsolutePath(), Charset.defaultCharset());
+    String[] splitedRows = config.split("\n");
+    
+    Map<String, String> cmap = new HashMap<String,String>();
+    
+    for(String row : splitedRows) {
+      String[] elems = row.split("=");
+      cmap.put(elems[0], elems[1]);
+    }
+    return cmap.get(key);
+  }
+  
   private static void startTestExecution() {
     boolean success = true;
     boolean testPassed = false;
