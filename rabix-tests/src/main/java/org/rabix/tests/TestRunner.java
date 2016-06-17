@@ -14,47 +14,28 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.rabix.backend.local.BackendCommandLine;
 import org.rabix.common.helper.JSONHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TestRunner {
-
   private static String testDirPath;
   private static String cmd_prefix;
-
   private static String resultPath = "./rabix-backend-local/target/result.yaml";
   private static String workingdir = "./rabix-backend-local/target/";
+  private static final Logger logger = LoggerFactory.getLogger(BackendCommandLine.class);
 
   public static void main(String[] commandLineArguments) {
-
     try {
       testDirPath = getConfig("testDirPath");
-      cmd_prefix = getConfig("cmd_prefix"); 
+      cmd_prefix = getConfig("cmd_prefix");
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
-       
-    
-//    testDirPath = "rabix-tests/testbacklog/";
-//    cmd_prefix = "./rabix.sh";
     startTestExecution();
   }
 
-  
-  private static String getConfig(String key) throws IOException {
-    File configFile = new File(System.getProperty("user.dir")+"/rabix-tests/config/core.properties");
-    String config = readFile(configFile.getAbsolutePath(), Charset.defaultCharset());
-    String[] splitedRows = config.split("\n");
-    
-    Map<String, String> cmap = new HashMap<String,String>();
-    
-    for(String row : splitedRows) {
-      String[] elems = row.split("=");
-      cmap.put(elems[0], elems[1]);
-    }
-    return cmap.get(key);
-  }
-  
   private static void startTestExecution() {
     boolean success = true;
     boolean testPassed = false;
@@ -63,7 +44,7 @@ public class TestRunner {
 
     if (dir.isDirectory()) {
       if (directoryListing != null) {
-        System.out.println("Extracting jar file: ");
+        logger.info("Extracting jar file");
         executeCommand("sudo tar -zxvf " + System.getProperty("user.dir")
             + "/rabix-backend-local/target/rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz");
         executeCommand("cp -a " + System.getProperty("user.dir") + "/rabix-tests/testbacklog .");
@@ -81,9 +62,11 @@ public class TestRunner {
               Object test = thisEntry.getValue();
               System.out
                   .println("---------------------------------------------------------------------------------------------------------------------------------------------");
-              System.out.println("Running test: " + test_name + "\nWith given parameters:");
+              logger.info("Running test: " + test_name +" with given parameters:");
+              
               Map<String, Map<String, LinkedHashMap>> mapTest = (Map<String, Map<String, LinkedHashMap>>) test;
-              System.out.println("  app: " + mapTest.get("app"));
+              logger.info("  app: " + mapTest.get("app"));
+              
               System.out.println("  inputs: " + mapTest.get("inputs"));
               System.out.println("  expected: " + mapTest.get("expected"));
 
@@ -209,6 +192,20 @@ public class TestRunner {
   static String readFile(String path, Charset encoding) throws IOException {
     byte[] encoded = Files.readAllBytes(Paths.get(path));
     return new String(encoded, encoding);
+  }
+
+  private static String getConfig(String key) throws IOException {
+    File configFile = new File(System.getProperty("user.dir") + "/rabix-tests/config/core.properties");
+    String config = readFile(configFile.getAbsolutePath(), Charset.defaultCharset());
+    String[] splitedRows = config.split("\n");
+
+    Map<String, String> cmap = new HashMap<String, String>();
+
+    for (String row : splitedRows) {
+      String[] elems = row.split("=");
+      cmap.put(elems[0], elems[1]);
+    }
+    return cmap.get(key);
   }
 
 }
