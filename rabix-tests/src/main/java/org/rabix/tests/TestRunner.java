@@ -42,7 +42,7 @@ public class TestRunner {
 
   
   private static String getConfig(String key) throws IOException {
-    File configFile = new File("config/core.properties");
+    File configFile = new File(System.getProperty("user.dir")+"/rabix-tests/config/core.properties");
     String config = readFile(configFile.getAbsolutePath(), Charset.defaultCharset());
     String[] splitedRows = config.split("\n");
     
