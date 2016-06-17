@@ -42,8 +42,12 @@ public class TestRunner {
     File dir = new File(testDirPath);
     File[] directoryListing = dir.listFiles();
 
-    if (dir.isDirectory()) {
-      if (directoryListing != null) {
+    if (!dir.isDirectory()) {
+      logger.error("Problem with test directory path: Test directory path is not valid directory path.");
+    } else {
+      if (directoryListing == null) {
+        logger.error("Problem with provided test directory: Test directory is empty.");
+      } else {
         logger.info("Extracting jar file");
         executeCommand("sudo tar -zxvf " + System.getProperty("user.dir")
             + "/rabix-backend-local/target/rabix-backend-local-0.0.1-SNAPSHOT-id3.tar.gz");
@@ -61,7 +65,7 @@ public class TestRunner {
               Object test_name = thisEntry.getKey();
               Object test = thisEntry.getValue();
               logger
-              .info("---------------------------------------------------------------------------------------------------------------------------------------------");
+                  .info("---------------------------------------------------------------------------------------------------------------------------------------------");
               logger.info("Running test: " + test_name + " with given parameters:");
               Map<String, Map<String, LinkedHashMap>> mapTest = (Map<String, Map<String, LinkedHashMap>>) test;
               logger.info("  app: " + mapTest.get("app"));
@@ -109,11 +113,7 @@ public class TestRunner {
           logger
               .info("---------------------------------------------------------------------------------------------------------------------------------------------");
         }
-      } else {
-        logger.error("Problem with provided test directory: Test directory is empty.");
       }
-    } else {
-      logger.error("Problem with test directory path: Test directory path is not valid directory path.");
     }
 
   }
@@ -180,7 +180,7 @@ public class TestRunner {
     if (null == output)
       logger.info("COMMAND FAILED: " + cmdline + "\n");
     else
-      for (String line : output){
+      for (String line : output) {
         logger.info(line);
       }
   }
