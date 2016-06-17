@@ -13,7 +13,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.rabix.backend.local.BackendCommandLine;
 import org.rabix.common.helper.JSONHelper;
 import org.slf4j.Logger;
@@ -36,7 +35,6 @@ public class TestRunner {
     startTestExecution();
   }
 
-  @SuppressWarnings("null")
   private static void startTestExecution() {
     boolean success = true;
     boolean testPassed = false;
@@ -97,7 +95,6 @@ public class TestRunner {
             }
 
           } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
           }
         }
@@ -113,9 +110,9 @@ public class TestRunner {
           logger
               .info("---------------------------------------------------------------------------------------------------------------------------------------------");
           logger.info("Test suite failed.");
-          logger.info("Failed test number: "+failedTests.size());
+          logger.info("Failed test number: " + failedTests.size());
           logger.info("Failed tests:");
-          for(Object test : failedTests) {
+          for (Object test : failedTests) {
             logger.info(test.toString());
           }
           logger
