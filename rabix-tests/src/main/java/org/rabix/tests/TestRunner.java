@@ -23,7 +23,7 @@ public class TestRunner {
   private static String cmd_prefix;
   private static String resultPath = "./rabix-backend-local/target/result.yaml";
   private static String workingdir = "./rabix-backend-local/target/";
-  private static final Logger logger = LoggerFactory.getLogger(BackendCommandLine.class);
+  private static final Logger logger = LoggerFactory.getLogger(TestRunner.class);
 
   public static void main(String[] commandLineArguments) {
     try {
