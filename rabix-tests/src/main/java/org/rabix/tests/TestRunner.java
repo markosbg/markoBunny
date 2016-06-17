@@ -96,23 +96,24 @@ public class TestRunner {
         }
 
         if (success) {
-          System.out
-              .println("---------------------------------------------------------------------------------------------------------------------------------------------");
-          System.out.println("Test suite passed successfully.");
-          System.out
-              .println("---------------------------------------------------------------------------------------------------------------------------------------------");
+
+          logger
+              .info("---------------------------------------------------------------------------------------------------------------------------------------------");
+          logger.info("Test suite passed successfully.");
+          logger
+              .info("---------------------------------------------------------------------------------------------------------------------------------------------");
         } else {
-          System.out
-              .println("---------------------------------------------------------------------------------------------------------------------------------------------");
-          System.out.println("Test suite failed.");
-          System.out
-              .println("---------------------------------------------------------------------------------------------------------------------------------------------");
+          logger
+              .info("---------------------------------------------------------------------------------------------------------------------------------------------");
+          logger.info("Test suite failed.");
+          logger
+              .info("---------------------------------------------------------------------------------------------------------------------------------------------");
         }
       } else {
-        System.out.println("Problem with provided test directory: Test directory is empty.");
+        logger.error("Problem with provided test directory: Test directory is empty.");
       }
     } else {
-      System.out.println("Problem with test directory path: Test directory path is not valid directory path.");
+      logger.error("Problem with test directory path: Test directory path is not valid directory path.");
     }
 
   }
@@ -127,12 +128,12 @@ public class TestRunner {
     resultFileName = resultFileName.split("/")[resultFileName.split("/").length - 1];
     resultFileSize = (int) resultValues.get("size");
     resultFileClass = resultValues.get("class").toString();
-    System.out.println("Test validation:");
-    System.out.println("result file name: " + resultFileName + ", expected file name: "
+    logger.info("Test validation:");
+    logger.info("result file name: " + resultFileName + ", expected file name: "
         + mapTest.get("expected").get("outfile").get("name"));
-    System.out.println("result file size: " + resultFileSize + ", expected file size: "
+    logger.info("result file size: " + resultFileSize + ", expected file size: "
         + mapTest.get("expected").get("outfile").get("size"));
-    System.out.println("result file class: " + resultFileClass + ", expected file class: "
+    logger.info("result file class: " + resultFileClass + ", expected file class: "
         + mapTest.get("expected").get("outfile").get("class"));
 
     if (resultFileName.equals(mapTest.get("expected").get("outfile").get("name"))) {
@@ -140,13 +141,13 @@ public class TestRunner {
         if (resultFileClass.equals(mapTest.get("expected").get("outfile").get("class"))) {
           return true;
         } else {
-          System.out.println("result and expected file class are not equal!");
+          logger.info("result and expected file class are not equal!");
         }
       } else {
-        System.out.println("result and expected file size are not equal!");
+        logger.info("result and expected file size are not equal!");
       }
     } else {
-      System.out.println("result and expected file name are not equal!");
+      logger.info("result and expected file name are not equal!");
     }
 
     return false;
