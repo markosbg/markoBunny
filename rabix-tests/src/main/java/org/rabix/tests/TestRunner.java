@@ -42,7 +42,7 @@ public class TestRunner {
     boolean testPassed = false;
     File dir = new File(testDirPath);
     File[] directoryListing = dir.listFiles();
-    ArrayList<Object> failedTests = null;
+    ArrayList<Object> failedTests = new ArrayList<Object>();
 
     if (!dir.isDirectory()) {
       logger.error("Problem with test directory path: Test directory path is not valid directory path.");
