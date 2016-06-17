@@ -36,11 +36,13 @@ public class TestRunner {
     startTestExecution();
   }
 
+  @SuppressWarnings("null")
   private static void startTestExecution() {
     boolean success = true;
     boolean testPassed = false;
     File dir = new File(testDirPath);
     File[] directoryListing = dir.listFiles();
+    ArrayList<Object> failedTests = null;
 
     if (!dir.isDirectory()) {
       logger.error("Problem with test directory path: Test directory path is not valid directory path.");
@@ -88,6 +90,7 @@ public class TestRunner {
 
               } else {
                 logger.info(test_name + " FAILED");
+                failedTests.add(test_name);
                 success = false;
               }
 
@@ -110,6 +113,11 @@ public class TestRunner {
           logger
               .info("---------------------------------------------------------------------------------------------------------------------------------------------");
           logger.info("Test suite failed.");
+          logger.info("Failed test number: "+failedTests.size());
+          logger.info("Failed tests:");
+          for(Object test : failedTests) {
+            logger.info(test.toString());
+          }
           logger
               .info("---------------------------------------------------------------------------------------------------------------------------------------------");
         }
