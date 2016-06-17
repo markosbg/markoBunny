@@ -136,18 +136,22 @@ public class TestRunner {
     logger.info("result file class: " + resultFileClass + ", expected file class: "
         + mapTest.get("expected").get("outfile").get("class"));
 
-    if (resultFileName.equals(mapTest.get("expected").get("outfile").get("name"))) {
-      if (resultFileSize == (int) mapTest.get("expected").get("outfile").get("size")) {
-        if (resultFileClass.equals(mapTest.get("expected").get("outfile").get("class"))) {
-          return true;
-        } else {
-          logger.info("result and expected file class are not equal!");
-        }
-      } else {
-        logger.info("result and expected file size are not equal!");
-      }
-    } else {
+    boolean fileNamesEqual = resultFileName.equals(mapTest.get("expected").get("outfile").get("name"));
+    boolean fileSizesEqual = resultFileSize == (int) mapTest.get("expected").get("outfile").get("size");
+    boolean fileClassesEqual = resultFileClass.equals(mapTest.get("expected").get("outfile").get("class"));
+
+    if (!fileNamesEqual) {
       logger.info("result and expected file name are not equal!");
+    } else {
+      if (!fileSizesEqual) {
+        logger.info("result and expected file size are not equal!");
+      } else {
+        if (!fileClassesEqual) {
+          logger.info("result and expected file class are not equal!");
+        } else {
+          return true;
+        }
+      }
     }
 
     return false;
