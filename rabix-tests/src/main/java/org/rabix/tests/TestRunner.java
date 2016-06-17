@@ -60,8 +60,8 @@ public class TestRunner {
               Entry thisEntry = (Entry) entries.next();
               Object test_name = thisEntry.getKey();
               Object test = thisEntry.getValue();
-              System.out
-                  .println("---------------------------------------------------------------------------------------------------------------------------------------------");
+              logger
+              .info("---------------------------------------------------------------------------------------------------------------------------------------------");
               logger.info("Running test: " + test_name + " with given parameters:");
               Map<String, Map<String, LinkedHashMap>> mapTest = (Map<String, Map<String, LinkedHashMap>>) test;
               logger.info("  app: " + mapTest.get("app"));
@@ -178,10 +178,11 @@ public class TestRunner {
   static void executeCommand(String cmdline) {
     ArrayList<String> output = command(cmdline, workingdir);
     if (null == output)
-      System.out.println("COMMAND FAILED: " + cmdline + "\n");
+      logger.info("COMMAND FAILED: " + cmdline + "\n");
     else
-      for (String line : output)
-        System.out.println(line);
+      for (String line : output){
+        logger.info(line);
+      }
   }
 
   /**
