@@ -62,31 +62,28 @@ public class TestRunner {
               Object test = thisEntry.getValue();
               System.out
                   .println("---------------------------------------------------------------------------------------------------------------------------------------------");
-              logger.info("Running test: " + test_name +" with given parameters:");
-              
+              logger.info("Running test: " + test_name + " with given parameters:");
               Map<String, Map<String, LinkedHashMap>> mapTest = (Map<String, Map<String, LinkedHashMap>>) test;
               logger.info("  app: " + mapTest.get("app"));
-              
-              System.out.println("  inputs: " + mapTest.get("inputs"));
-              System.out.println("  expected: " + mapTest.get("expected"));
-
+              logger.info("  inputs: " + mapTest.get("inputs"));
+              logger.info("  expected: " + mapTest.get("expected"));
               String cmd = cmd_prefix + " " + mapTest.get("app") + " " + mapTest.get("inputs") + " > result.yaml";
-              System.out.println("->Running cmd: " + cmd + "\n");
+              logger.info("->Running cmd: " + cmd + "\n");
               executeCommand(cmd);
 
               File resultFile = new File(resultPath);
 
               String resultText = readFile(resultFile.getAbsolutePath(), Charset.defaultCharset());
               Map<String, Object> resultData = JSONHelper.readMap(JSONHelper.transformToJSON(resultText));
-              System.out.println("\nGenerated result file:");
-              System.out.println(resultText);
+              logger.info("\nGenerated result file:");
+              logger.info(resultText);
               testPassed = validateTestCase(mapTest, resultData);
-
-              System.out.print("\nTest result: ");
+              logger.info("\nTest result: ");
               if (testPassed) {
-                System.out.println(test_name + " PASSED");
+                logger.info(test_name + " PASSED");
+
               } else {
-                System.out.println(test_name + " FAILED");
+                logger.info(test_name + " FAILED");
                 success = false;
               }
 
